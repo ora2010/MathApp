@@ -1,0 +1,155 @@
+# Dart/Flutter/Plugins
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+*.lock
+
+# iOS/macOS
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Icon??
+**/ios/**/Icon???
+**/ios/**/Icon????
+**/ios/**/Icon?????
+**/ios/**/.idea/
+**/ios/**/*.hmap
+**/ios/**/*.ipa
+**/ios/**/*.xcconfig
+**/ios/**/*.xcworkspace
+**/ios/**/Flutter/Flutter.framework
+**/ios/**/Flutter/Flutter.podspec
+**/ios/**/Flutter/Flutter.xcframework
+**/ios/**/GeneratedPluginRegistrant.h
+**/ios/**/GeneratedPluginRegistrant.m
+**/ios/**/generated_plugin_registrant.h
+**/ios/**/generated_plugin_registrant.m
+**/ios/**/GoogleService-Info.plist
+**/ios/**/Runner/GeneratedPluginRegistrant.*
+
+# Android/Gradle
+**/android/app/debug
+**/android/app/profile
+**/android/app/release
+**/android/build/
+**/android/.gradle
+**/android/captures/
+**/android/gradle-app.setting
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# Web
+web/canvaskit/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*~.nib
+
+# Xcode
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+**/xcuserdata/
+**/xcshareddata/
+**/DerivedData/
+*.xcworkspace/
+.env
+.env.*.local
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be committed to version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter repo-specific
+/bin/cache/
+/bin/mingit/
+/dev/devicelab/build/
+/dev/integration_tests/**/xcuserdata/
+/dev/integration_tests/**/Pods/
+/packages/flutter/coverage/
+version
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# iOS/macOS/Android ignore files.
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*.xcconfig
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Icon??
+**/ios/**/Icon???
+**/ios/**/Icon????
+**/ios/**/Icon?????
+**/ios/**/.idea/
+**/ios/**/*.hmap
+**/ios/**/*.ipa
+**/ios/**/*.xcworkspace
+**/ios/**/Flutter/Flutter.framework
+**/ios/**/Flutter/Flutter.podspec
+**/ios/**/GeneratedPluginRegistrant.h
+**/ios/**/GeneratedPluginRegistrant.m
+**/ios/**/generated_plugin_registrant.h
+**/ios/**/generated_plugin_registrant.m
+
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/android/app/outputs/repo/
+
+# Exceptions to above rules.
+!/packages/flutter/lib/src/devtools_stub.dart
+Desktop/hackathon_project/
+build/
+.dart_tool/
+bin/
+Desktop/hackathon_project/
+build/
+.dart_tool/
+bin/
+build/
+*.dylib
+Desktop/hackathon_project/
+Desktop/hackathon_project/
+build/
+.dart_tool/
+*.dylib
+ios/Flutter/
