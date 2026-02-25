@@ -8,9 +8,9 @@ class SubTopicListScreen extends StatelessWidget {
   final MainTopic mainTopic;
 
   const SubTopicListScreen({
-    Key? key,
+    super.key,
     required this.mainTopic,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

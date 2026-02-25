@@ -8,7 +8,9 @@ import 'bookmarks_screen.dart';
 import 'settings_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+  final dynamic themeProvider;
+
+  const MainNavigationScreen({super.key, this.themeProvider});
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
@@ -17,14 +19,20 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeScreenPremium(),
-    const SearchScreen(),
-    const ProfileScreen(),
-    const BookmarksScreen(),
-    const InspirationScreen(),
-    const SettingsScreen(),
-  ];
+  late List<Widget> _screens;
+
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      const HomeScreenPremium(),
+      const SearchScreen(),
+      const ProfileScreen(),
+      const BookmarksScreen(),
+      const InspirationScreen(),
+      SettingsScreen(themeProvider: widget.themeProvider),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

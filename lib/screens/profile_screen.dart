@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
-import '../screens/home_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -10,30 +9,35 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String _userName = 'Ученик';
-  int _level = 1;
-  int _streakDays = 0;
-  int _solvedProblems = 0;
-  int _totalPoints = 0;
+  String _userName = '🎓 Математик';
+  String _userLevel = 'Новичок';
+  int _streakDays = 12;
+  int _solvedProblems = 247;
+  int _totalPoints = 2470;
+  double _accuracy = 87.5;
+  String _selectedAvatar = '👨‍🎓';
 
-  @override
-  void initState() {
-    super.initState();
-    _loadUserData();
-  }
-
-  void _loadUserData() {
-    // TODO: Load from SharedPreferences or backend
-  }
+  final List<String> _avatarOptions = [
+    '👨‍🎓',
+    '👩‍🎓',
+    '🧑‍💻',
+    '🤓',
+    '👨‍🔬',
+    '👩‍🔬',
+    '🧠',
+    '⭐',
+    '🏆',
+    '🚀',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: CustomScrollView(
         slivers: [
-          // Header with gradient
           SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 280,
             floating: false,
             pinned: true,
             backgroundColor: AppColors.surface,
@@ -50,50 +54,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Profile image
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
+                      GestureDetector(
+                        onTap: _showAvatarPicker,
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 4,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Center(
+                              child: Text(
+                                _selectedAvatar,
+                                style: const TextStyle(fontSize: 60),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      GestureDetector(
+                        onTap: _showEditNameDialog,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _userName,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 20,
                             ),
                           ],
                         ),
-                        child: const Center(
-                          child: Text(
-                            '👨‍🎓',
-                            style: TextStyle(fontSize: 40),
-                          ),
-                        ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 8),
                       Text(
-                        _userName,
-                        style: AppTextStyles.headingMedium.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          'Уровень $_level',
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: Colors.white,
-                          ),
+                        _userLevel,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white.withOpacity(0.9),
                         ),
                       ),
                     ],
@@ -102,103 +124,119 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-          // Stats grid
           SliverPadding(
             padding: const EdgeInsets.all(AppSpacing.lg),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                // Quick stats
-                Row(
+                GridView.count(
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: AppSpacing.md,
+                  crossAxisSpacing: AppSpacing.md,
                   children: [
                     _buildStatCard(
-                      icon: '🔥',
                       title: 'Серия',
                       value: '$_streakDays',
-                      subtitle: 'дней подряд',
-                      color: Color(0xFFFF6B6B),
+                      icon: '🔥',
+                      gradient: [const Color(0xFFF59E0B), const Color(0xFFDC2626)],
                     ),
-                    const SizedBox(width: 12),
                     _buildStatCard(
-                      icon: '✅',
                       title: 'Решено',
                       value: '$_solvedProblems',
-                      subtitle: 'задач',
-                      color: AppColors.success,
+                      icon: '✅',
+                      gradient: [AppColors.success, const Color(0xFF059669)],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
                     _buildStatCard(
-                      icon: '⭐',
                       title: 'Баллы',
                       value: '$_totalPoints',
-                      subtitle: 'очков',
-                      color: Color(0xFFFFC93C),
-                    ),
-                    const SizedBox(width: 12),
-                    _buildStatCard(
                       icon: '🏆',
-                      title: 'Ранг',
-                      value: 'Новичок',
-                      subtitle: 'ваш статус',
-                      color: Color(0xFF9B59B6),
+                      gradient: [AppColors.primary, const Color(0xFF8B5CF6)],
+                    ),
+                    _buildStatCard(
+                      title: 'Точность',
+                      value: '${_accuracy.toStringAsFixed(1)}%',
+                      icon: '📊',
+                      gradient: [const Color(0xFF06B6D4), const Color(0xFF0891B2)],
                     ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                // Progress sections
-                _buildSectionTitle('Прогресс по темам'),
-                const SizedBox(height: 12),
-                _buildProgressItem(
-                  title: 'Теория чисел',
-                  progress: 0.6,
-                  color: Color(0xFF6366F1),
+                Text(
+                  '📈 Прогресс по темам',
+                  style: AppTextStyles.headingSmall,
                 ),
-                const SizedBox(height: 12),
-                _buildProgressItem(
-                  title: 'Алгебра',
-                  progress: 0.4,
-                  color: Color(0xFF8B5CF6),
+                const SizedBox(height: AppSpacing.md),
+                _buildProgressItem('Теория чисел', 45, 50),
+                const SizedBox(height: AppSpacing.md),
+                _buildProgressItem('Алгебра', 38, 50),
+                const SizedBox(height: AppSpacing.md),
+                _buildProgressItem('Планиметрия', 32, 45),
+                const SizedBox(height: AppSpacing.md),
+                _buildProgressItem('Комбинаторика', 28, 40),
+                const SizedBox(height: AppSpacing.xl),
+                Text(
+                  '🏅 Достижения',
+                  style: AppTextStyles.headingSmall,
                 ),
-                const SizedBox(height: 12),
-                _buildProgressItem(
-                  title: 'Геометрия',
-                  progress: 0.2,
-                  color: Color(0xFF10B981),
+                const SizedBox(height: AppSpacing.md),
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    borderRadius: BorderRadius.circular(AppRadius.lg),
+                    border: Border.all(color: AppColors.border),
+                  ),
+                  child: GridView.count(
+                    crossAxisCount: 4,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    children: [
+                      _buildAchievementBadge('🌟', 'Новичок'),
+                      _buildAchievementBadge('⭐', 'Практик'),
+                      _buildAchievementBadge('🔥', '7 дней'),
+                      _buildAchievementBadge('💯', 'Эксперт'),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                // Achievement section
-                _buildSectionTitle('Достижения'),
-                const SizedBox(height: 12),
-                _buildAchievementGrid(),
-                const SizedBox(height: AppSpacing.xl),
-                // Action buttons
-                SizedBox(
+                Container(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (_) => const HomeScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.primary, Color(0xFF8B5CF6)],
                     ),
-                    child: const Text(
-                      'Начать обучение',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                    borderRadius: BorderRadius.circular(AppRadius.lg),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('📚 Начните обучение!'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(AppRadius.lg),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Text(
+                          '🚀 Начать решение задач',
+                          style: AppTextStyles.bodyLarge.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ),
                 ),
+                const SizedBox(height: AppSpacing.xl),
               ]),
             ),
           ),
@@ -207,39 +245,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildStatCard({
-    required String icon,
-    required String title,
-    required String value,
-    required String subtitle,
-    required Color color,
-  }) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          border: Border.all(color: AppColors.border),
-          borderRadius: BorderRadius.circular(AppRadius.lg),
+  void _showEditNameDialog() {
+    TextEditingController controller = TextEditingController(text: _userName);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('✏️ Редактировать имя'),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: 'Введите ваше имя',
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppRadius.md)),
+            prefixIcon: const Icon(Icons.person),
+          ),
         ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Отмена')),
+          ElevatedButton(
+            onPressed: () {
+              setState(() => _userName = controller.text.isEmpty ? '🎓 Математик' : controller.text);
+              Navigator.pop(context);
+            },
+            child: const Text('Сохранить'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showAvatarPicker() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              icon,
-              style: const TextStyle(fontSize: 28),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              value,
-              style: AppTextStyles.headingMedium.copyWith(
-                color: color,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: AppTextStyles.bodySmall,
+            Text('🎨 Выберите аватар', style: AppTextStyles.headingSmall),
+            const SizedBox(height: AppSpacing.lg),
+            GridView.count(
+              crossAxisCount: 5,
+              children: _avatarOptions.map((avatar) => 
+                GestureDetector(
+                  onTap: () {
+                    setState(() => _selectedAvatar = avatar);
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: _selectedAvatar == avatar ? AppColors.primary : Colors.transparent,
+                        width: 3,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(child: Text(avatar, style: const TextStyle(fontSize: 40))),
+                  ),
+                ),
+              ).toList(),
             ),
           ],
         ),
@@ -247,93 +310,108 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildProgressItem({
+  Widget _buildStatCard({
     required String title,
-    required double progress,
-    required Color color,
+    required String value,
+    required String icon,
+    required List<Color> gradient,
   }) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: gradient),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        boxShadow: [
+          BoxShadow(
+            color: gradient[0].withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(icon, style: const TextStyle(fontSize: 32)),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.white.withOpacity(0.8),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressItem(String title, int solved, int total) {
+    double progress = solved / total;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Text(title, style: AppTextStyles.bodyMedium),
             Text(
-              title,
-              style: AppTextStyles.bodyLarge,
-            ),
-            Text(
-              '${(progress * 100).toInt()}%',
+              '$solved/$total',
               style: AppTextStyles.bodySmall.copyWith(
-                color: color,
-                fontWeight: FontWeight.w600,
+                color: AppColors.textSecondary,
               ),
             ),
           ],
         ),
         const SizedBox(height: 8),
         ClipRRect(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           child: LinearProgressIndicator(
             value: progress,
-            minHeight: 6,
-            backgroundColor: color.withOpacity(0.1),
-            valueColor: AlwaysStoppedAnimation(color),
+            minHeight: 8,
+            backgroundColor: AppColors.border,
+            valueColor: AlwaysStoppedAnimation<Color>(
+              progress > 0.7 ? AppColors.success : AppColors.primary,
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: AppTextStyles.headingSmall,
-    );
-  }
-
-  Widget _buildAchievementGrid() {
-    final achievements = [
-      {'icon': '🌟', 'title': 'Первый шаг'},
-      {'icon': '🔥', 'title': '7 дней'},
-      {'icon': '🎯', 'title': '10 задач'},
-      {'icon': '⭐', 'title': '100 баллов'},
-    ];
-
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-      ),
-      itemCount: achievements.length,
-      itemBuilder: (context, index) {
-        final achievement = achievements[index];
-        return Container(
+  Widget _buildAchievementBadge(String icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 50,
+          height: 50,
           decoration: BoxDecoration(
-            color: AppColors.surface,
-            border: Border.all(color: AppColors.border),
+            gradient: const LinearGradient(
+              colors: [AppColors.primary, Color(0xFF8B5CF6)],
+            ),
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                achievement['icon'] as String,
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                achievement['title'] as String,
-                style: AppTextStyles.bodySmall,
-                textAlign: TextAlign.center,
-              ),
-            ],
+          child: Center(
+            child: Text(icon, style: const TextStyle(fontSize: 24)),
           ),
-        );
-      },
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: AppTextStyles.bodySmall,
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

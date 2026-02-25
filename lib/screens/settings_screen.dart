@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  final dynamic themeProvider;
+
+  const SettingsScreen({super.key, this.themeProvider});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -71,7 +73,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             'Тёмная тема',
             'Более тёмные цвета',
             _darkMode,
-            (value) => setState(() => _darkMode = value),
+            (value) {
+              setState(() => _darkMode = value);
+              if (widget.themeProvider != null) {
+                widget.themeProvider.setDarkMode(value);
+              }
+            },
             Icons.dark_mode,
           ),
           _buildSwitchTile(
